@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Product Filter</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: lightgray;
+    padding: 20px;
+  }
+
+  h2 {
+    color: black;
+  }
+
+  select {
+    padding: 6px;
+    margin: 10px 0;
+  }
+
+  .product {
+    background-color: white;
+    border-left: 6px solid green;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+  }
+
+  .price {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+
+</head>
+<body>
+
+<h2>Product Filter</h2>
+
+<label>Select Category:</label>
+<select id="categorySelect">
+  <option value="All">All</option>
+  <option value="Clothing">Clothing</option>
+  <option value="Electronics">Electronics</option>
+  <option value="Books">Books</option>
+</select>
+
+<div id="productList"></div>
+
+<script>
+const products = [
+  { name: "T-Shirt", category: "Clothing", price: 499 },
+  { name: "Jeans", category: "Clothing", price: 999 },
+  { name: "Headphones", category: "Electronics", price: 1999 },
+  { name: "Smartphone", category: "Electronics", price: 14999 },
+  { name: "Novel", category: "Books", price: 299 },
+  { name: "Cookbook", category: "Books", price: 399 }
+];
+
+const dropdown = document.getElementById("categorySelect");
+const productList = document.getElementById("productList");
+
+function showProducts(productArray) {
+  productList.innerHTML = "";
+
+  productArray.forEach(function (product) {
+    const div = document.createElement("div");
+    div.className = "product";
+
+    div.innerHTML =
+      "<strong>" + product.name + "</strong><br>" +
+      "Category: " + product.category + "<br>" +
+      "Price: <span class='price'>₹" + product.price + "</span>";
+
+    productList.appendChild(div);
+  });
+}
+
+showProducts(products);
+
+dropdown.addEventListener("change", function () {
+  const selectedCategory = dropdown.value;
+
+  if (selectedCategory === "All") {
+    showProducts(products);
+  } else {
+    const filteredProducts = products.filter(function (product) {
+      return product.category === selectedCategory;
+    });
+    showProducts(filteredProducts);
+  }
+});
+</script>
+
+</body>
+</html>
